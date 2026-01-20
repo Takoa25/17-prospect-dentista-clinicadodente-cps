@@ -1,0 +1,66 @@
+# Netlify Configuration File
+# Documentação: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  # Comando de build
+  command = "npm run build"
+  # Diretório de saída do build (Vite usa 'dist' por padrão)
+  publish = "dist"
+
+# Configuração de Headers de Segurança
+[[headers]]
+  # Aplicar a todas as páginas
+  for = "/*"
+  
+  [headers.values]
+    # Content Security Policy - Proteção contra XSS e outras vulnerabilidades
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.unsplash.com https://images.unsplash.com; connect-src 'self' https://wa.me; frame-src 'self' https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+    
+    # Proteção contra clickjacking - SAMEORIGIN permite iframes do mesmo domínio
+    # Usamos SAMEORIGIN em vez de DENY para não conflitar com possíveis iframes internos
+    X-Frame-Options = "SAMEORIGIN"
+    
+    # Previne MIME type sniffing - força o navegador a respeitar o Content-Type declarado
+    X-Content-Type-Options = "nosniff"
+    
+    # Força HTTPS por 1 ano (incluindo subdomínios)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    
+    # Controla quais informações de referrer são enviadas
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Desabilita recursos perigosos do navegador (geolocation, microphone, camera)
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
+    
+    # Proteção XSS do navegador (legacy, mas ainda útil para navegadores antigos)
+    X-XSS-Protection = "1; mode=block"
+    
+    # Cache para assets estáticos
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache específico para HTML (sem cache agressivo)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Cache para arquivos de imagem
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Configuração de Redirecionamento
+# Redireciona HTTP para HTTPS automaticamente
+[[redirects]]
+  from = "http://clinicadodente.netlify.app/*"
+  to = "https://clinicadodente.netlify.app/:splat"
+  status = 301
+  force = true
+
+# SPA Redirect - Garante que todas as rotas funcionem corretamente
+# Este deve ser o ÚLTIMO redirect para não sobrescrever os outros
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================================================================================
+   VARIÁVEIS CSS (Sincronizadas com Content.ts)
+   ================================================================================== */
+
+:root {
+  /* Cores (valores padrão - serão sobrescritos dinamicamente) */
+  --color-primary: #ffffff;
+  --color-primary-dark: #ffbd37;
+  --color-secondary: #171717;
+  --color-background: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --color-accent: #FFC857;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #128C7E;
+  --color-whatsapp-text: #ffffff;
+
+  /* Fontes */
+  --font-bebas: 'Bebas Neue', sans-serif;
+  --font-grotesk: 'Space Grotesk', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+/* ==================================================================================
+   ESTILOS GLOBAIS
+   ================================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile: Desabilita smooth scroll para melhor performance com animações */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Remove delays de touch para melhor responsividade */
+  * {
+    touch-action: manipulation;
+  }
+}
+
+html,
+body {
+  font-family: var(--font-inter);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  max-width: 100vw;
+  width: 100%;
+  overflow-x: clip; /* Previne scroll lateral sem quebrar elementos fixos */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none; /* Opcional: previne o 'pull to refresh' se estiver atrapalhando a Hero */
+}
+
+#root {
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-grotesk);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ==================================================================================
+   UTILITÁRIOS CUSTOMIZADOS
+   ================================================================================== */
+
+.font-bebas {
+  font-family: var(--font-bebas);
+}
+
+.font-grotesk {
+  font-family: var(--font-grotesk);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+/* ==================================================================================
+   SCROLLBAR CUSTOMIZADO
+   ================================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+/* ==================================================================================
+   SELEÇÃO DE TEXTO
+   ================================================================================== */
+
+::selection {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+::-moz-selection {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+/* ==================================================================================
+   ANIMAÇÕES CUSTOMIZADAS
+   ================================================================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ==================================================================================
+   ACESSIBILIDADE - FOCUS STATES
+   ================================================================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ==================================================================================
+   RESET DE ESTILOS PADRÃO
+   ================================================================================== */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ==================================================================================
+   CLASSES UTILITÁRIAS EXTRAS
+   ================================================================================== */
+
+.container-custom {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  overflow: hidden;
+  /* Garante que filhos não vazem */
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding: 0 4rem;
+  }
+}
+
+.gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent, rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+}
+
+.backdrop-blur-custom {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
