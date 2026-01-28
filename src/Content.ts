@@ -429,6 +429,6 @@ export const content: ContentConfig = {
         copyright: "Todos os direitos reservados.",
         developedBy: "Desenvolvido com ❤️ & ☕ pela ",
         developerName: "TAKOA",
-        developerUrl: "https://takoadigital.com.br",
+        developerUrl: "https://takoadigital.com",
     },
 };
